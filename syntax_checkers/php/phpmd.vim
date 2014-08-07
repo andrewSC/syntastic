@@ -22,34 +22,6 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! SyntaxCheckers_php_phpmd_GetHighlightRegex(item)
-    let term = matchstr(a:item['text'], '\m\C^The \S\+ \w\+\(()\)\= \(has\|is not\|utilizes\)')
-    if term != ''
-        return '\V'.substitute(term, '\m\C^The \S\+ \(\w\+\)\(()\)\= .*', '\1', '')
-    endif
-    let term = matchstr(a:item['text'], '\m\C^Avoid \(variables with short\|excessively long variable\) names like \S\+\.')
-    if term != ''
-        return '\V'.substitute(term, '\m\C^Avoid \(variables with short\|excessively long variable\) names like \(\S\+\)\..*', '\2', '')
-    endif
-    let term = matchstr(a:item['text'], '\m\C^Avoid using short method names like \S\+::\S\+()\.')
-    if term != ''
-        return '\V'.substitute(term, '\m\C^Avoid using short method names like \S\+::\(\S\+\)()\..*', '\1', '')
-    endif
-    let term = matchstr(a:item['text'], '\m\C^\S\+ accesses the super-global variable ')
-    if term != ''
-        return '\V'.substitute(term, '\m\C accesses the super-global variable .*$', '', '')
-    endif
-    let term = matchstr(a:item['text'], '\m\C^Constant \S\+ should be defined in uppercase')
-    if term != ''
-        return '\V'.substitute(term, '\m\C^Constant \(\S\+\) should be defined in uppercase', '\1', '')
-    endif
-    let term = matchstr(a:item['text'], "\\m\\C^The '\\S\\+()' method which returns ")
-    if term != ''
-        return '\V'.substitute(term, "\\m\\C^The '\\(\\S\\+\\()' method which returns.*", '\1', '')
-    endif
-    let term = matchstr(a:item['text'], '\m\C variable \S\+ should begin with ')
-    if term != ''
-        return '\V'.substitute(term, '\m\C.* variable \(\S\+\) should begin with .*', '\1', '')
-    endif
     let term = matchstr(a:item['text'], "\\m\\C^Avoid unused \\(private fields\\|local variables\\|private methods\\|parameters\\) such as '\\S\\+'")
     if term != ''
         return '\V'.substitute(term, "\\m\\C^Avoid unused \\(private fields\\|local variables\\|private methods\\|parameters\\) such as '\\(\\S\\+\\)'.*", '\2', '')
@@ -60,7 +32,7 @@ endfunction
 function! SyntaxCheckers_php_phpmd_GetLocList() dict
     let makeprg = self.makeprgBuild({
         \ 'post_args_before': 'text',
-        \ 'post_args': 'codesize,design,unusedcode,naming' })
+        \ 'post_args': 'unusedcode' })
 
     let errorformat = '%E%f:%l%\s%#%m'
 

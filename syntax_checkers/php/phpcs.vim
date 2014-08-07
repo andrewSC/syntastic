@@ -23,7 +23,7 @@ set cpo&vim
 
 function! SyntaxCheckers_php_phpcs_GetLocList() dict
     let makeprg = self.makeprgBuild({
-        \ 'args': '--tab-width=' . &tabstop,
+        \ 'args': '--standard=Behance --tab-width=' . &tabstop,
         \ 'args_after': '--report=csv' })
 
     let errorformat =
