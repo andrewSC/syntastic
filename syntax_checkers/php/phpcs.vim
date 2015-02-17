@@ -9,6 +9,9 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+"
+" See here for details of phpcs
+"    - phpcs (see http://pear.php.net/package/PHP_CodeSniffer)
 
 if exists("g:loaded_syntastic_php_phpcs_checker")
     finish
@@ -19,7 +22,9 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! SyntaxCheckers_php_phpcs_GetLocList() dict
-    let makeprg = self.makeprgBuild({ 'args_after': '--report=csv' })
+    let makeprg = self.makeprgBuild({
+        \ 'args': '--standard=Behance --tab-width=' . &tabstop,
+        \ 'args_after': '--report=csv' })
 
     let errorformat =
         \ '%-GFile\,Line\,Column\,Type\,Message\,Source\,Severity%.%#,'.
